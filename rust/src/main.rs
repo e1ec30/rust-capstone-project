@@ -161,5 +161,7 @@ fn main() -> bitcoincore_rpc::Result<()> {
     writeln!(f, "{}", block.bip34_block_height().unwrap());
     writeln!(f, "{}", block.block_hash());
 
+    // e1ec30: Forgot to enable GitHub Actions
+
     Ok(())
 }
