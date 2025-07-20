@@ -62,7 +62,7 @@ fn is_mine(rpc: &Client, script: &ScriptBuf) -> bool {
 
 // e1ec30: Create a new rpc client each time I need to do something at a specific url
 fn get_client_at_url(url: &str) -> bitcoincore_rpc::Result<Client> {
-    let new_url = format!("{}{}", RPC_URL, url);
+    let new_url = format!("{RPC_URL}{url}");
     let client = Client::new(
         &new_url,
         Auth::UserPass(RPC_USER.to_owned(), RPC_PASS.to_owned()),
@@ -95,7 +95,7 @@ fn main() -> bitcoincore_rpc::Result<()> {
 
     // Get blockchain info
     let blockchain_info = rpc.get_blockchain_info()?;
-    println!("Blockchain Info: {:?}", blockchain_info);
+    println!("Blockchain Info: {blockchain_info:?}");
 
     // Create/Load the wallets, named 'Miner' and 'Trader'. Have logic to optionally create/load them if they do not exist or not loaded already.
     load_or_create_wallet("Trader", &rpc)?;
@@ -179,13 +179,13 @@ fn main() -> bitcoincore_rpc::Result<()> {
     // Write the data to ../out.txt in the specified format given in readme.md
     let mut f = File::create("../out.txt").unwrap();
     writeln!(f, "{}", confirmed_tx.txid());
-    writeln!(f, "{}", miner_in_addr);
-    writeln!(f, "{}", miner_in_amount);
-    writeln!(f, "{}", trader_out_addr);
-    writeln!(f, "{}", trader_amount);
-    writeln!(f, "{}", miner_change_addr);
-    writeln!(f, "{}", miner_amount);
-    writeln!(f, "{}", fee);
+    writeln!(f, "{miner_in_addr}");
+    writeln!(f, "{miner_in_amount}");
+    writeln!(f, "{trader_out_addr}");
+    writeln!(f, "{trader_amount}");
+    writeln!(f, "{miner_change_addr}");
+    writeln!(f, "{miner_amount}");
+    writeln!(f, "{fee}");
     writeln!(f, "{}", block.bip34_block_height().unwrap());
     writeln!(f, "{}", block.block_hash());
 
